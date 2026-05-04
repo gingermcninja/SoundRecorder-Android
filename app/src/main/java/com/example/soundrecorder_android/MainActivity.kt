@@ -78,7 +78,16 @@ fun MainApp(viewModel: RecorderViewModel) {
                 currentlyPlayingId = viewModel.currentlyPlayingId,
                 onTogglePlayback = viewModel::togglePlayback,
             )
-            Tab.PLAYBACK -> PlaybackScreen()
+            Tab.PLAYBACK -> PlaybackScreen(
+                playbackButtons = viewModel.playbackButtons,
+                recordings = viewModel.recordings,
+                currentlyPlayingId = viewModel.currentlyPlayingId,
+                onButtonPressed = viewModel::pressPlaybackButton,
+                onAddButton = viewModel::addPlaybackButton,
+                onRemoveButton = viewModel::removePlaybackButton,
+                onRenameButton = viewModel::renamePlaybackButton,
+                onReassignButton = viewModel::reassignPlaybackButton,
+            )
         }
 
         BottomNavBar(
