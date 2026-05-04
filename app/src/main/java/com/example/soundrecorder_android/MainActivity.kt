@@ -68,10 +68,18 @@ fun MainApp(viewModel: RecorderViewModel) {
     ) {
         when (selectedTab) {
             Tab.RECORD -> RecordScreen(
-                isRecording = viewModel.isRecording,
+                phase = viewModel.phase,
                 elapsedSeconds = viewModel.elapsedSeconds,
+                previewPositionMs = viewModel.previewPositionMs,
+                isPreviewPlaying = viewModel.isPreviewPlaying,
+                suggestedName = "Recording ${viewModel.recordings.size + 1}",
+                waveform = viewModel.waveform,
                 onStart = viewModel::startRecording,
                 onStop = viewModel::stopRecording,
+                onTogglePreview = viewModel::togglePreview,
+                onSeekPreview = viewModel::seekPreview,
+                onSave = viewModel::saveRecording,
+                onDiscard = viewModel::discardRecording,
             )
             Tab.LIST -> ListScreen(
                 recordings = viewModel.recordings,
