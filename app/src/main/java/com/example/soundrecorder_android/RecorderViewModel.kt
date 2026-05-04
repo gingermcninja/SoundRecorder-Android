@@ -117,6 +117,17 @@ class RecorderViewModel(application: Application) : AndroidViewModel(application
         )
     }
 
+    fun deleteRecording(recording: Recording) {
+        if (currentlyPlayingId == recording.id) stopPlayback()
+        val linked = playbackButtons.filter { it.recordingId == recording.id }
+        linked.forEach { btn ->
+            val idx = playbackButtons.indexOfFirst { it.id == btn.id }
+            if (idx >= 0) playbackButtons.removeAt(idx)
+        }
+        recordings.remove(recording)
+        File(recording.filePath).delete()
+    }
+
     fun removePlaybackButton(button: PlaybackButton) {
         val index = playbackButtons.indexOfFirst { it.id == button.id }
         if (index >= 0) playbackButtons.removeAt(index)

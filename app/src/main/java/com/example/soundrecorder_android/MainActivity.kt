@@ -77,6 +77,7 @@ fun MainApp(viewModel: RecorderViewModel) {
                 recordings = viewModel.recordings,
                 currentlyPlayingId = viewModel.currentlyPlayingId,
                 onTogglePlayback = viewModel::togglePlayback,
+                onDeleteRecording = viewModel::deleteRecording,
             )
             Tab.PLAYBACK -> PlaybackScreen(
                 playbackButtons = viewModel.playbackButtons,
