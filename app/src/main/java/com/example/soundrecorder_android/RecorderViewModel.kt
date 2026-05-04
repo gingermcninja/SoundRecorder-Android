@@ -25,6 +25,7 @@ class RecorderViewModel(application: Application) : AndroidViewModel(application
     private var timerJob: Job? = null
 
     val recordings = mutableStateListOf<Recording>()
+    val playbackButtons = mutableStateListOf<PlaybackButton>()
 
     var isRecording by mutableStateOf(false)
         private set
@@ -105,6 +106,39 @@ class RecorderViewModel(application: Application) : AndroidViewModel(application
     }
 
     // ── Playback ─────────────────────────────────────────────────────────────
+
+    fun addPlaybackButton(recording: Recording) {
+        playbackButtons.add(
+            PlaybackButton(
+                id = System.currentTimeMillis(),
+                recordingId = recording.id,
+                label = recording.name,
+            )
+        )
+    }
+
+    fun removePlaybackButton(button: PlaybackButton) {
+        val index = playbackButtons.indexOfFirst { it.id == button.id }
+        if (index >= 0) playbackButtons.removeAt(index)
+    }
+
+    fun renamePlaybackButton(button: PlaybackButton, newLabel: String) {
+        val index = playbackButtons.indexOfFirst { it.id == button.id }
+        if (index >= 0) playbackButtons[index] = button.copy(label = newLabel)
+    }
+
+    fun reassignPlaybackButton(button: PlaybackButton, recording: Recording) {
+        val index = playbackButtons.indexOfFirst { it.id == button.id }
+        if (index >= 0) playbackButtons[index] = button.copy(
+            recordingId = recording.id,
+            label = recording.name,
+        )
+    }
+
+    fun pressPlaybackButton(button: PlaybackButton) {
+        val recording = recordings.find { it.id == button.recordingId } ?: return
+        togglePlayback(recording)
+    }
 
     fun togglePlayback(recording: Recording) {
         if (currentlyPlayingId == recording.id) {
