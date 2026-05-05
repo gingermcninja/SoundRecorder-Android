@@ -56,7 +56,8 @@ fun ListScreen(
     ) {
         Text(
             text = "Recordings",
-            color = Color(0xFF1C1C1E),
+            //color = Color(0xFF1C1C1E),
+            color = Color.White,
             fontSize = 36.sp,
             fontWeight = FontWeight.Bold,
         )
