@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -61,41 +62,58 @@ fun PlaybackScreen(
     onReassignButton: (PlaybackButton, Recording) -> Unit,
 ) {
     var showAddPicker by remember { mutableStateOf(false) }
-
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .statusBarsPadding()
-            .navigationBarsPadding(),
-        contentPadding = PaddingValues(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+            .padding(bottom = 120.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
     ) {
-        items(playbackButtons, key = { it.id }) { button ->
-            val isPlaying = button.recordingId == currentlyPlayingId
-            PlaybackButtonItem(
-                button = button,
-                isPlaying = isPlaying,
-                recordings = recordings,
-                onClick = { onButtonPressed(button) },
-                onRename = { newLabel -> onRenameButton(button, newLabel) },
-                onReassign = { recording -> onReassignButton(button, recording) },
-                onRemove = { onRemoveButton(button) },
-            )
-        }
+        Spacer(modifier = Modifier.height(24.dp))
+        Text(
+            text = "Sound Board",
+            color = Color.White,
+            fontSize = 34.sp,
+            fontWeight = FontWeight.Bold,
+        )
+        Spacer(modifier = Modifier.height(24.dp))
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            modifier = Modifier
+                .fillMaxSize()
+                .statusBarsPadding()
+                .navigationBarsPadding(),
+            contentPadding = PaddingValues(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
 
-        item {
-            OutlinedButton(
-                onClick = { showAddPicker = true },
-                shape = ButtonShape,
-                border = BorderStroke(2.dp, Color(0xFF3A3A3C)),
-                colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(ButtonHeight),
-            ) {
-                Icon(Icons.Filled.Add, contentDescription = "Add button")
+            items(playbackButtons, key = { it.id }) { button ->
+                val isPlaying = button.recordingId == currentlyPlayingId
+                PlaybackButtonItem(
+                    button = button,
+                    isPlaying = isPlaying,
+                    recordings = recordings,
+                    onClick = { onButtonPressed(button) },
+                    onRename = { newLabel -> onRenameButton(button, newLabel) },
+                    onReassign = { recording -> onReassignButton(button, recording) },
+                    onRemove = { onRemoveButton(button) },
+                )
+            }
+
+            item {
+                OutlinedButton(
+                    onClick = { showAddPicker = true },
+                    shape = ButtonShape,
+                    border = BorderStroke(2.dp, Color(0xFF3A3A3C)),
+                    colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(ButtonHeight),
+                ) {
+                    Icon(Icons.Filled.Add, contentDescription = "Add button")
+                }
             }
         }
     }

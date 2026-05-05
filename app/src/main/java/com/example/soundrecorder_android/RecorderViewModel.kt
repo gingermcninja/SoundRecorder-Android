@@ -399,6 +399,7 @@ class RecorderViewModel(application: Application) : AndroidViewModel(application
                 info.presentationTimeUs = extractor.sampleTime - startUs
                 info.size = size
                 info.flags = extractor.sampleFlags
+                //info.flags = MediaCodec.BUFFER_FLAG_KEY_FRAME
                 info.offset = 0
                 muxer.writeSampleData(muxerTrack, buffer, info)
                 extractor.advance()

@@ -38,8 +38,8 @@ import com.example.soundrecorder_android.ui.theme.SoundRecorderAndroidTheme
 
 enum class Tab(val label: String, val icon: ImageVector) {
     PLAYBACK("Playback", Icons.Filled.PlayArrow),
-    LIST("List", Icons.AutoMirrored.Filled.FormatListBulleted),
     RECORD("Record", Icons.Filled.Mic),
+    LIST("List", Icons.AutoMirrored.Filled.FormatListBulleted),
 }
 
 class MainActivity : ComponentActivity() {
@@ -58,8 +58,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainApp(viewModel: RecorderViewModel) {
-    var selectedTab by remember { mutableStateOf(Tab.RECORD) }
-    val isDark = selectedTab != Tab.LIST
+    var selectedTab by remember { mutableStateOf(Tab.PLAYBACK) }
+    val isDark = true// selectedTab != Tab.LIST
 
     Box(
         modifier = Modifier
